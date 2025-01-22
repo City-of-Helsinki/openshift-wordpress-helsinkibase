@@ -1,12 +1,20 @@
 FROM registry.access.redhat.com/ubi9/php-81:latest
 
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+ARG COMPOSER_AUTH="provide_github_pat_as_build_arg"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
 ENV AZURE_SQL_SSL_CA_PATH='/usr/local/share/ca-certificates/DigiCertGlobalRootCA.crt.pem'
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV DISPLAY_ERRORS=OFF
+ENV COMPOSER_AUTH=${COMPOSER_AUTH}
 # ENV DOCUMENTROOT=/public
+
+ARG COMPOSER_REPOSITORIES=""
+ARG COMPOSER_PACKAGES=""
+
+ENV COMPOSER_REPOSITORIES=${COMPOSER_REPOSITORIES}
+ENV COMPOSER_PACKAGES=${COMPOSER_PACKAGES}
 
 USER 0
 

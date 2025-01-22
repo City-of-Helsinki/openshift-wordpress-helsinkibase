@@ -17,6 +17,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     echo "# Setup composer bin"
     mv /opt/app-root/src/composer.phar /usr/bin/composer
     chmod +x /usr/bin/composer
+    chmod +w /opt/app-root/src/composer.json
 
     if [[ ${COMPOSER_REPOSITORIES} ]]; then
         echo "# Setup additional Composer repositories"
@@ -25,7 +26,8 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
         for REPO_NAME_TYPE_URL in "${REPOSITORIES_LIST[@]}"
         do
-            composer config repositories.$(echo "${REPO_NAME_TYPE_URL}" | xargs) 1> /dev/null 2> /dev/null
+            echo "adding repository with following details: ${REPO_NAME_TYPE_URL}" 
+            composer config repositories.$(echo "${REPO_NAME_TYPE_URL}" | xargs)
             REPOSITORY_ADDED=$?
 
             if [ ${REPOSITORY_ADDED} -ne 0 ]; then

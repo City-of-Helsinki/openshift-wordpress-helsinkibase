@@ -21,7 +21,6 @@ RUN dnf update -y  && \
 # Additional php-fpm settings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
-    echo "php_admin_value[error_log] = /tmp/error_log" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
 
 # CA cert for MySQL Database

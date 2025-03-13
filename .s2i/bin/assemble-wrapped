@@ -54,7 +54,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     else
         echo "# No additional Composer packages to install"
     fi
-
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"
 fi

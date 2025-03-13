@@ -33,6 +33,9 @@ RUN wget $WP_CLI_URL -O /usr/bin/wp && \
 
 ADD . /tmp/src/
 
+# Custom group
+RUN groupadd -r wordpress && usermod -aG wordpress default
+
 # Install the dependencies
 RUN chmod +x /tmp/src/.s2i/bin/assemble-wrapped /tmp/src/.s2i/bin/run-wrapped && /tmp/src/.s2i/bin/assemble-wrapped
 

@@ -2,9 +2,6 @@
 
 echo -e "\n===== BEFORE S2I RUN =====\n"
 
-echo "# whoami"
-whoami
-
 if ! wp core is-installed; then
     echo "# Setup default database tables"
 
@@ -46,6 +43,3 @@ echo -e "\n===== S2I RUN =====\n"
 exec /usr/libexec/s2i/run
 
 echo -e "\n===== S2I RUN READY =====\n"
-
-echo "# whoami"
-whoami

@@ -33,14 +33,14 @@ RUN wget $WP_CLI_URL -O /usr/bin/wp && \
 
 ADD . /tmp/src/
 
+# Custom group
+RUN groupadd -r wordpress && usermod -aG wordpress default
+
 # Install the dependencies
 RUN chmod +x /tmp/src/.s2i/bin/assemble-wrapped /tmp/src/.s2i/bin/run-wrapped && /tmp/src/.s2i/bin/assemble-wrapped
 
 # Remove part which runs file permission operations
 RUN sed -i '/mkdir -p ${PHP_FPM_RUN_DIR}/,/chown -R 1001:0 ${PHP_FPM_LOG_PATH}/d' /usr/libexec/s2i/run
-
-# Custom group
-RUN groupadd -r wordpress && usermod -aG wordpress default
 
 # Set proper permissions
 RUN mkdir -p ${PHP_FPM_RUN_DIR} && \

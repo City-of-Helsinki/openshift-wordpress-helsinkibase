@@ -42,4 +42,7 @@ wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfo
 echo -e "\n===== S2I RUN =====\n"
 exec /usr/libexec/s2i/run
 
+chgrp -R wordpress /opt/app-root/src
+chmod -R g-w,o-rwx /opt/app-root/src
+
 echo -e "\n===== S2I RUN READY =====\n"

@@ -57,7 +57,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
     echo "# Change group ownership"
     chgrp -R wordpress /opt/app-root/src
-    chmod -R g+rwX /opt/app-root/src
+    chmod -R g-w,o-rwx /opt/app-root/src
 
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"

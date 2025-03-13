@@ -55,9 +55,16 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
         echo "# No additional Composer packages to install"
     fi
 
-    echo "# Change group ownership"
-    chgrp -R wordpress /opt/app-root/src
-    chmod -R g-w,o-rwx /opt/app-root/src
+    # Change group ownership but PRESERVE execution rights
+    chown -R wordpress /opt/app-root/src
+
+    # Adjust permissions:
+    # - Ensure all directories are accessible
+    # - Keep the `run` script executable
+    find /opt/app-root/src -type d -exec chmod 755 {} \;
+    find /opt/app-root/src -type f -exec chmod g-w,o-rwx {} \;
+
+    chmod +x /opt/app-root/src/run
 
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"

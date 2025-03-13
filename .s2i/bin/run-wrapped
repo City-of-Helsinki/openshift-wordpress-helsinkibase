@@ -44,5 +44,6 @@ exec /usr/libexec/s2i/run
 
 chgrp -R wordpress /opt/app-root/src
 chmod -R g-w,o-rwx /opt/app-root/src
+chmod -R g+rw /opt/app-root/src/wp-content/uploads
 
 echo -e "\n===== S2I RUN READY =====\n"

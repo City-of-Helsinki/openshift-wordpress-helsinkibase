@@ -64,6 +64,6 @@ echo -e "\n===== S2I ASSEMBLE READY =====\n"
 
 # cleanup
 rm -rf /mnt/secrets/*
-rm /opt/app-root/src/.config/composer/auth.*
+rm -f /opt/app-root/src/.config/composer/auth.*
 
 exit ${S2I_ASSEMBLE_SUCCESS}

@@ -33,12 +33,6 @@ cat /opt/app-root/src/httpd-cfg/redirects.conf >> /opt/app-root/src/httpd-cfg/re
 # Move new redirect configuration in place of current one
 mv /opt/app-root/src/httpd-cfg/redirects.conf_generated /opt/app-root/src/httpd-cfg/redirects.conf
 
-echo "# Delete default WP plugins"
-wp plugin delete akismet hello
-
-echo "# Delete default WP themes"
-wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive
-
 echo -e "\n===== S2I RUN =====\n"
 exec /usr/libexec/s2i/run
 

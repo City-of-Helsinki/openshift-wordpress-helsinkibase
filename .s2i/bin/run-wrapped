@@ -23,7 +23,7 @@ echo "# Populating SMTP configuration variables"
 export SMTP_HOST="${SMTP_HOST:=relay.hel.fi}"
 export SMTP_PORT="${SMTP_PORT:=25}"
 export SMTP_FROM="${SMTP_FROM:=noreply@hel.fi}"
-envsubst < ~/.msmtprc > /tmp/.msmtprc_temp && mv /tmp/.msmtprc_temp ~/.msmtprc
+envsubst < ~/.msmtprc > /tmp/.msmtprc_temp && cp /tmp/.msmtprc_temp ~/.msmtprc
 
 echo "# Generating Apache httpd redirects"
 # Generate redirects from WORDPRESS_REDIRECTS variable

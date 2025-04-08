@@ -27,17 +27,7 @@ RUN dnf update -y  && \
     dnf install -y mysql-community-client && \
     dnf install -y msmtp && \
     dnf install -y jq && \
-    dnf install -y php-devel php-pear gcc make autoconf ImageMagick ImageMagick-devel && \
     dnf clean all
-
-# Build imagick from source (avoids php API mismatch)
-RUN pecl install imagick && \
-    echo "extension=imagick.so" > /etc/php.d/40-imagick.ini
-
-RUN dnf remove -y gcc make autoconf php-devel php-pear ImageMagick-devel && \
-    dnf clean all && \
-    rm -rf /var/cache/dnf /tmp/pear ~/.pearrc && \
-    rm -rf /tmp/pear ~/.pearrc
 
 # Additional php-fpm settings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \

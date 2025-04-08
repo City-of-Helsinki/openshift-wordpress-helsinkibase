@@ -27,7 +27,7 @@ RUN dnf update -y  && \
     dnf install -y mysql-community-client && \
     dnf install -y msmtp && \
     dnf install -y jq && \
-    dnf install -y epel-release php-devel php-pear gcc make autoconf ImageMagick ImageMagick-devel && \
+    dnf install -y php-devel php-pear gcc make autoconf ImageMagick ImageMagick-devel && \
     dnf clean all
 
 # Build imagick from source (avoids php API mismatch)

@@ -24,7 +24,6 @@ export SMTP_HOST="${SMTP_HOST:=relay.hel.fi}"
 export SMTP_PORT="${SMTP_PORT:=25}"
 export SMTP_FROM="${SMTP_FROM:=noreply@hel.fi}"
 envsubst < ~/.msmtprc > /tmp/.msmtprc_temp && cp /tmp/.msmtprc_temp ~/.msmtprc
-chmod 440 ~/.msmtprc
 
 echo "# Generating Apache httpd redirects"
 # Generate redirects from WORDPRESS_REDIRECTS variable
@@ -33,8 +32,6 @@ sh ~/utils/generate_redirects.sh /opt/app-root/src/httpd-cfg/redirects.conf_gene
 cat /opt/app-root/src/httpd-cfg/redirects.conf >> /opt/app-root/src/httpd-cfg/redirects.conf_generated
 # Move new redirect configuration in place of current one
 mv /opt/app-root/src/httpd-cfg/redirects.conf_generated /opt/app-root/src/httpd-cfg/redirects.conf
-# Limit permissions
-chmod 550 /opt/app-root/src/httpd-cfg
 
 echo -e "\n===== S2I RUN =====\n"
 exec /usr/libexec/s2i/run

@@ -4,9 +4,6 @@ echo -e "\n===== BEFORE S2I ASSEMBLE =====\n"
 echo "# Backup composer.json"
 cp /tmp/src/composer.json /tmp/composer.json.bak
 
-echo "# whoami pre assemble"
-whoami
-
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble
 S2I_ASSEMBLE_SUCCESS=$?
@@ -60,9 +57,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
     echo "# Setup directory and file ownerships"
 
-    echo "# whoami"
-    whoami
-
     echo -e "\t- Change group ownership for all files & directories"
     chgrp -R wordpress /opt/app-root/src
 
@@ -94,8 +88,5 @@ else
 fi
 
 echo -e "\n===== S2I ASSEMBLE READY =====\n"
-
-echo "# whoami post assemble"
-whoami
 
 exit ${S2I_ASSEMBLE_SUCCESS}

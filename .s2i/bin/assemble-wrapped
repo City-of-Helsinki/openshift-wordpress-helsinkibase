@@ -61,30 +61,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     echo "# Delete default WP themes"
     find /opt/app-root/src/wp-content/themes -type d -name 'twenty*' -exec rm -rf {} \;
 
-    echo "# Setup directory and file ownerships"
-
-    echo -e "- Change group ownership for all files & directories"
-    chgrp -R wordpress /opt/app-root/src
-
-    echo -e "- Secure all directories (only owner can write)"
-    find /opt/app-root/src -type d -exec chmod 755 {} \;
-
-    echo -e "- Secure all files (remove group write and lock out others)"
-    find /opt/app-root/src -type f -exec chmod g-w,o-rwx {} \;
-
-    echo -e "- Preserve execution permissions for required scripts"
-    chmod +x /opt/app-root/src/.s2i/bin/run-wrapped
-    chmod +x /opt/app-root/src/utils/generate_redirects.sh
-
-    echo -e "- Allow writing to /httpd-cfg and /httpd-cfg/redirects.conf"
-    chgrp -R wordpress /opt/app-root/src/httpd-cfg
-    chmod -R g+rw /opt/app-root/src/httpd-cfg
-    chmod g+rw /opt/app-root/src/httpd-cfg/redirects.conf
-
-    echo -e "- Allow writing to .msmtprc"
-    chgrp wordpress /opt/app-root/src/.msmtprc
-    chmod 660 /opt/app-root/src/.msmtprc
-
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"
 fi

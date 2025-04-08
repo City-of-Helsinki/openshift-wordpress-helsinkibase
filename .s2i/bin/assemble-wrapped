@@ -77,7 +77,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
     echo -e "\t- Allow writing to .msmtprc"
     chgrp wordpress /opt/app-root/src/.msmtprc
-    chmod g+rw /opt/app-root/src/.msmtprc
+    chmod 660 /opt/app-root/src/.msmtprc
 
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"

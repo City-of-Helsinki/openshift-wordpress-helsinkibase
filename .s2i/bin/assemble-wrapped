@@ -71,17 +71,13 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     chmod +x /opt/app-root/src/utils/generate_redirects.sh
 
     echo -e "\t- Allow writing to /httpd-cfg and /httpd-cfg/redirects.conf"
-    chgrp -R wordpress /httpd-cfg
-    chmod -R g+rw /httpd-cfg
-    chmod g+rw /httpd-cfg/redirects.conf
+    chgrp -R wordpress /opt/app-root/src/httpd-cfg
+    chmod -R g+rw /opt/app-root/src/httpd-cfg
+    chmod g+rw /opt/app-root/src/httpd-cfg/redirects.conf
 
     echo -e "\t- Allow writing to .msmtprc"
     chgrp wordpress /opt/app-root/src/.msmtprc
     chmod g+rw /opt/app-root/src/.msmtprc
-
-    echo -e "\t- Allow writing to /wp-content/uploads"
-    chgrp -R wordpress /opt/app-root/src/wp-content/uploads
-    chmod -R g+rw /opt/app-root/src/wp-content/uploads
 
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"

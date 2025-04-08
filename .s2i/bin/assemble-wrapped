@@ -56,10 +56,10 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     fi
 
     echo "# Delete default WP plugins"
-    wp plugin delete akismet hello
+    wp plugin delete akismet hello --allow-root
 
     echo "# Delete default WP themes"
-    wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive
+    wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive --allow-root
 
     echo "# Setup directory and file ownerships"
 

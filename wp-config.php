@@ -44,6 +44,10 @@ if ( get_env_value( 'WORDPRESS_CACHE_DIR', '' ) ) {
 	define( 'CACHE_ENABLER_CACHE_DIR', get_env_value( 'WORDPRESS_CACHE_DIR', '' ) );
 }
 
+if ( get_env_value( 'WORDPRESS_CACHE_SETTINGS_DIR', '' ) ) {
+	define( 'CACHE_ENABLER_SETTINGS_DIR', get_env_value( 'WORDPRESS_CACHE_SETTINGS_DIR', '' ) );
+}
+
 /**
   * Database
   */

@@ -33,9 +33,6 @@ RUN wget $WP_CLI_URL -O /usr/bin/wp && \
 
 ADD . /tmp/src/
 
-# Create group with GID matching the defined UID
-RUN groupadd -g 1001810000 wordpress
-
 # Install the dependencies
 RUN chmod +x /tmp/src/.s2i/bin/assemble-wrapped /tmp/src/.s2i/bin/run-wrapped && /tmp/src/.s2i/bin/assemble-wrapped
 
@@ -54,7 +51,11 @@ RUN mkdir -p ${PHP_FPM_RUN_DIR} && \
     chmod 777 /run/httpd && \
     chmod 777 ~/.msmtprc && \
     touch /var/log/msmtp.log && chmod 777 /var/log/msmtp.log && \
-    chmod -R 777 /opt/app-root/src/.cache
+    chmod -R 777 /opt/app-root/src/.cache && \
+    chmod -R g+rX,o-rwx /opt/app-root/src && \
+    chmod -R g+rw /opt/app-root/src/httpd-cfg 
+    chmod g+rw /opt/app-root/src/httpd-cfg/redirects.conf
+    chmod g+rw /opt/app-root/src/.msmtprc
 
 # Set the default command for the resulting image
 CMD /opt/app-root/src/.s2i/bin/run-wrapped

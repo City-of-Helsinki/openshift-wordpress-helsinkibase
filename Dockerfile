@@ -27,6 +27,7 @@ RUN dnf update -y  && \
     dnf install -y mysql-community-client && \
     dnf install -y msmtp && \
     dnf install -y jq && \
+    dnf install -y php-pecl-imagick ImageMagick ImageMagick-libs && \
     dnf clean all
 
 # Additional php-fpm settings

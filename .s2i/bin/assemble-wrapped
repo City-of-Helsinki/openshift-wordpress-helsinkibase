@@ -56,10 +56,10 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     fi
 
     echo "# Delete default WP plugins"
-    wp plugin delete akismet hello --allow-root
+    rm -rf /opt/app-root/src/wp-content/plugins/akismet /opt/app-root/src/wp-content/plugins/hello.php
 
     echo "# Delete default WP themes"
-    wp theme delete twentytwentyone twentytwentytwo twentytwentythree twentytwentyfour twentytwentyfive --allow-root
+    find /opt/app-root/src/wp-content/themes -type d -name 'twenty*' -exec rm -rf {} \;
 
     echo "# Setup directory and file ownerships"
 

@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/php-81:latest
+FROM registry.access.redhat.com/ubi9/php-82:latest
 
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 ARG COMPOSER_AUTH="{}"

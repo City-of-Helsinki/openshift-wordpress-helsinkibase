@@ -5,6 +5,7 @@ trigger:
   branches:
     include:
       - pipeline_trigger
+      - main
   paths:
     exclude:
     - '*.md'

@@ -2,7 +2,7 @@
 echo -e "\n===== BEFORE S2I ASSEMBLE =====\n"
 
 echo "# Setup default php config"
-mv /tmp/config/wp-helfi.ini /etc/php.d/wp-helfi.ini
+mv /tmp/src/config/wp-helfi.ini /etc/php.d/wp-helfi.ini
 
 echo "# Backup composer.json"
 cp /tmp/src/composer.json /tmp/composer.json.bak

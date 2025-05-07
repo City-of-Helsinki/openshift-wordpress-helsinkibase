@@ -1,6 +1,9 @@
 #!/bin/bash
 echo -e "\n===== BEFORE S2I ASSEMBLE =====\n"
 
+echo "# Setup default php config"
+mv /tmp/config/wp-helfi.ini /etc/php.d/wp-helfi.ini
+
 echo "# Backup composer.json"
 cp /tmp/src/composer.json /tmp/composer.json.bak
 
@@ -26,7 +29,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
         for REPO_NAME_TYPE_URL in "${REPOSITORIES_LIST[@]}"
         do
-            echo "adding repository with following details: ${REPO_NAME_TYPE_URL}" 
+            echo "adding repository with following details: ${REPO_NAME_TYPE_URL}"
             composer config repositories.$(echo "${REPO_NAME_TYPE_URL}" | xargs)
             REPOSITORY_ADDED=$?
 

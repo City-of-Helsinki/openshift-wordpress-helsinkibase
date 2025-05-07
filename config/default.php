@@ -1,5 +1,9 @@
 <?php
 
+if ( ! function_exists( 'maybe_define_env_const' ) || ! function_exists( 'get_env_value' ) ) {
+	die;
+}
+
 /**
   * Environment
   */

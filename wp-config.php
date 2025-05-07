@@ -53,11 +53,12 @@ if (
 	$_SERVER['HTTPS'] = 'on';
 }
 
-/** WordPress configuration */
+/** Per project WordPress configuration */
 if ( file_exists( __DIR__ . '/config/custom.php' ) ) {
 	require_once __DIR__ . '/config/custom.php';
 }
 
+/** Default WordPress configuration */
 if ( file_exists( __DIR__ . '/config/default.php' ) ) {
 	require_once __DIR__ . '/config/default.php';
 }

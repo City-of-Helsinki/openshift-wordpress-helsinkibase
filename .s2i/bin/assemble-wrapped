@@ -56,6 +56,32 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     else
         echo "# No additional Composer packages to install"
     fi
+
+    echo "# Delete default WP plugins"
+    rm -rf /opt/app-root/src/wp-content/plugins/akismet /opt/app-root/src/wp-content/plugins/hello.php
+
+    echo "# Delete default WP themes"
+    find /opt/app-root/src/wp-content/themes -type d -name 'twenty*' -exec rm -rf {} \;
+
+    echo "# Set group ownership to root"
+    chgrp -R root /opt/app-root/src
+
+    echo "# Remove group write from EVERYTHING"
+    find /opt/app-root/src -type f -exec chmod g-w,o-rwx {} +
+    find /opt/app-root/src -type d -exec chmod g-w,o-rwx {} +
+
+    echo "# Selectively add group write"
+    chmod g+rw /opt/app-root/src/httpd-cfg/redirects.conf
+    chmod g+rw /opt/app-root/src/.msmtprc
+    chmod -R g+rw /opt/app-root/src/httpd-cfg
+
+    echo "# Ensure group execute on all directories"
+    find /opt/app-root/src -type d -exec chmod g+X {} +
+
+    echo "# Mark custom scripts executable"
+    chmod +x /opt/app-root/src/.s2i/bin/run-wrapped
+    chmod +x /opt/app-root/src/utils/generate_redirects.sh
+
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"
 fi

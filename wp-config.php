@@ -38,10 +38,6 @@ if ( ! function_exists( 'maybe_define_env_const' ) ) {
 	}
 }
 
-if ( get_env_value( 'WORDPRESS_CACHE_SETTINGS_DIR', '' ) ) {
-	define( 'CACHE_ENABLER_SETTINGS_DIR', get_env_value( 'WORDPRESS_CACHE_SETTINGS_DIR', '' ) );
-}
-
 /**
   * Reverse proxy configuration for WordPress
   * https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy

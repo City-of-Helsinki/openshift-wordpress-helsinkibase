@@ -34,6 +34,9 @@ resources:
       type: git
       # Azure DevOps project/repository
       name: devops-toolchain/openshift-wordpress-base
+    - repository: github-app-token
+      type: git
+      name: devops-toolchain/github-app-token
 
 extends:
   # Filename in Azure DevOps Repository
@@ -46,3 +49,4 @@ extends:
     #   DEBUG: 1
     # configMap: # pod environment variables
     #   DEBUG: 1
+  template: update-github-app-token.yaml@github-app-token

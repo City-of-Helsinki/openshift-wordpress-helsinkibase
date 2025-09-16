@@ -22,7 +22,7 @@ RUN mkdir -p /opt/app-root/src/.config/composer && \
 
 # Install required packages
 
-RUN dnf install mysql jq && \
+RUN dnf install -y mysql jq && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
     dnf install -y msmtp && \
     dnf clean all

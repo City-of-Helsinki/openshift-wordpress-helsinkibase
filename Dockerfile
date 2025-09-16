@@ -21,7 +21,11 @@ RUN mkdir -p /opt/app-root/src/.config/composer && \
     fi
 
 # Install required packages
-RUN dnf install -y mysql msmtp jq && dnf clean all
+
+RUN dnf install mysql jq && \
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+    dnf install -y msmtp && \
+    dnf clean all
 
 # Additional php-fpm settings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \

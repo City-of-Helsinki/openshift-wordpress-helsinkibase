@@ -7,7 +7,6 @@ ARG COMPOSER_PACKAGES=""
 ARG MOUNT_SECRET="false"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
-ENV AZURE_SQL_SSL_CA_PATH='/usr/local/share/ca-certificates/DigiCertGlobalRootCA.crt.pem'
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV DISPLAY_ERRORS=OFF
 
@@ -21,22 +20,16 @@ RUN mkdir -p /opt/app-root/src/.config/composer && \
         cp /mnt/secrets/* /opt/app-root/src/.config/composer; \
     fi
 
-RUN dnf update -y  && \
+# Install required packages
+RUN dnf install -y mysql jq && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
-    dnf install -y https://dev.mysql.com/get/mysql80-community-release-el9-5.noarch.rpm && \
-    dnf install -y mysql-community-client && \
     dnf install -y msmtp && \
-    dnf install -y jq && \
     dnf clean all
 
 # Additional php-fpm settings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
-
-# CA cert for MySQL Database
-RUN mkdir -p /usr/local/share/ca-certificates && \
-    wget https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem -O $AZURE_SQL_SSL_CA_PATH
 
 # WP CLI
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \

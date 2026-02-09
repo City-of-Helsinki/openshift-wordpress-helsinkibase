@@ -3,8 +3,13 @@
     "type": "project",
     "repositories": [
         {
+            "name": "wpackagist",
             "type": "composer",
-            "url": "https://wpackagist.org"
+            "url": "https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*",
+                "wpackagist-theme/*"
+            ]
         },
         {
             "type": "vcs",
@@ -53,7 +58,9 @@
             "city-of-helsinki/wp-mu-autoloader"
         ],
         "wp-content/mu-plugins/{$name}": [
-            "type:wordpress-muplugin"
+            "type:wordpress-muplugin",
+            "wpackagist-plugin/two-factor",
+            "wpackagist-plugin/limit-login-attempts-reloaded"
         ],
         "wp-content/plugins/{$name}": [
             "type:wordpress-plugin"

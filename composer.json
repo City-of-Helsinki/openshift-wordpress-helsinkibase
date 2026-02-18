@@ -59,8 +59,7 @@
         ],
         "wp-content/mu-plugins/{$name}": [
             "type:wordpress-muplugin",
-            "wpackagist-plugin/two-factor",
-            "wpackagist-plugin/limit-login-attempts-reloaded"
+            "wpackagist-plugin/two-factor"
         ],
         "wp-content/plugins/{$name}": [
             "type:wordpress-plugin"

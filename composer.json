@@ -33,7 +33,7 @@
       "johnpbloch/wordpress-core-installer": "^2.0",
       "johnpbloch/wordpress-core": "6.9.1",
 
-      "city-of-helsinki/wp-mu-autoloader": "^1.0",
+      "city-of-helsinki/wp-mu-autoloader": "^2.0",
       "city-of-helsinki/wordpress-helfi-site-core": "*",
 
       "inpsyde/wp-translation-downloader": "^2.0"

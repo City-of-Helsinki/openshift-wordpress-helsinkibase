@@ -31,14 +31,6 @@ RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
 
-# Install Composer globally
-RUN curl -sS https://getcomposer.org/installer | php \
-    -- --install-dir=/usr/bin --filename=composer && \
-        chmod +x /usr/bin/composer
-
-# Verify installation
-RUN composer --version
-
 # WP CLI
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \
     chmod +x /usr/bin/wp

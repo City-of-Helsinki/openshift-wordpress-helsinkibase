@@ -26,12 +26,16 @@
         {
             "type": "vcs",
             "url": "https://github.com/City-of-Helsinki/wordpress-helfi-helsinkiteema.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/johnpbloch/wordpress-core"
         }
     ],
     "require": {
       "composer/installers": "^2.2",
       "johnpbloch/wordpress-core-installer": "^2.0",
-      "johnpbloch/wordpress-core": "6.9.4",
+      "johnpbloch/wordpress-core": "dev-7.0",
 
       "city-of-helsinki/wp-mu-autoloader": "^2.0",
       "city-of-helsinki/wordpress-helfi-site-core": "*",

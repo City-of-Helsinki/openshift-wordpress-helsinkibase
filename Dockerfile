@@ -8,7 +8,6 @@ ARG MOUNT_SECRET="false"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
 ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV COMPOSER=/usr/local/bin/composer
 ENV DISPLAY_ERRORS=OFF
 
 # ENV DOCUMENTROOT=/public
@@ -34,7 +33,8 @@ RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
 
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php \
-    -- --install-dir=/usr/local/bin --filename=composer
+    -- --install-dir=/usr/bin --filename=composer && \
+        chmod +x /usr/bin/composer
 
 # Verify installation
 RUN composer --version

@@ -5,7 +5,7 @@ echo "# Setup default php config"
 mv /tmp/src/config/wp-helfi.ini /etc/php.d/wp-helfi.ini
 
 echo "# Backup composer.json"
-mv /tmp/src/composer.json /tmp/composer.json.bak
+cp /tmp/src/composer.json /tmp/composer.json.bak
 
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble
@@ -18,8 +18,8 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     mv /tmp/composer.json.bak /opt/app-root/src/composer.json
 
     echo "# Setup composer bin"
-    # mv /opt/app-root/src/composer.phar /usr/bin/composer
-    # chmod +x /usr/bin/composer
+    mv /opt/app-root/src/composer.phar /usr/bin/composer
+    chmod +x /usr/bin/composer
     chmod +w /opt/app-root/src/composer.json
 
     if [[ ${COMPOSER_REPOSITORIES} ]]; then
@@ -47,7 +47,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     if [[ ${COMPOSER_PACKAGES} ]]; then
         echo "# Install additional Composer packages"
 
-        composer require ${COMPOSER_PACKAGES} --no-interaction --no-ansi --optimize-autoloader $COMPOSER_ARGS
+        composer require ${COMPOSER_PACKAGES}
         PACKAGES_INSTALLED=$?
 
         if [ ${PACKAGES_INSTALLED} -ne 0 ]; then

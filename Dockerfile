@@ -8,6 +8,7 @@ ARG MOUNT_SECRET="false"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER=/usr/local/bin/composer
 ENV DISPLAY_ERRORS=OFF
 
 # ENV DOCUMENTROOT=/public
@@ -30,6 +31,13 @@ RUN dnf install -y mysql jq && \
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
+
+# Install Composer globally
+RUN curl -sS https://getcomposer.org/installer | php \
+    -- --install-dir=/usr/local/bin --filename=composer
+
+# Verify installation
+RUN composer --version
 
 # WP CLI
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \

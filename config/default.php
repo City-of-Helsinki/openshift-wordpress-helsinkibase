@@ -123,7 +123,7 @@ if ( get_bool_env_value( 'WP_RESILIENT_LOGGER_ENABLED', false ) ) {
 			),
 			'origin'                 => get_env_value( 'WP_RESILIENT_LOGGER_ORIGIN', 'helsinki-wp' ),
 			'store_old_entries_days' => get_int_env_value( 'WP_RESILIENT_LOGGER_STORE_OLD_ENTRIES_DAYS', 30 ),
-			'batch_limit'            => get_int_env_value( 'WP_RESILIENT_LOGGER_BATCH_LIMIT', 500 ),
+			'batch_limit'            => get_int_env_value( 'WP_RESILIENT_LOGGER_BATCH_LIMIT', 5000 ),
 			'chunk_size'             => get_int_env_value( 'WP_RESILIENT_LOGGER_CHUNK_SIZE', 500 ),
 			'submit_unsent_entries'  => get_bool_env_value( 'WP_RESILIENT_LOGGER_SUBMIT_UNSENT_ENTRIES', true ),
 			'clear_sent_entries'     => get_bool_env_value( 'WP_RESILIENT_LOGGER_CLEAR_SENT_ENTRIES', true ),

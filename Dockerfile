@@ -8,6 +8,7 @@ ARG MOUNT_SECRET="false"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_DEV=1
 ENV DISPLAY_ERRORS=OFF
 
 # ENV DOCUMENTROOT=/public

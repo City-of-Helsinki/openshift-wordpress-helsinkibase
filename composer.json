@@ -48,8 +48,7 @@
       "allow-plugins": {
         "composer/installers": true,
         "johnpbloch/wordpress-core-installer": true,
-        "inpsyde/wp-translation-downloader": true,
-        "boxuk/wp-muplugin-loader": true
+        "inpsyde/wp-translation-downloader": true
       }
     },
     "minimum-stability": "dev",

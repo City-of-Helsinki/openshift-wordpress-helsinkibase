@@ -1,3 +1,10 @@
+schedules:
+  - cron: "0 2 * * 1"  # Run every Monday at 2 AM UTC
+    displayName: "Weekly Monday Build"
+    branches:
+      include:
+        - main
+
 # Continuous integration (CI) triggers cause a pipeline to run whenever you push
 # an update to the specified branches or you push specified tags.
 trigger:
@@ -8,7 +15,6 @@ trigger:
   paths:
     exclude:
     - '*.md'
-    - '.github/'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to
@@ -20,9 +26,6 @@ trigger:
 #
 # Opt out of pull request validation
 pr: none
-
-# By default, use self-hosted agents
-pool: Default
 
 resources:
   repositories:

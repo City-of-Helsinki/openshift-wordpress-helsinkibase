@@ -4,6 +4,7 @@ schedules:
     branches:
       include:
         - main
+        - ubi9-php83-wp702
 
 # Continuous integration (CI) triggers cause a pipeline to run whenever you push
 # an update to the specified branches or you push specified tags.
@@ -12,6 +13,7 @@ trigger:
   branches:
     include:
       - main
+      - ubi9-php83-wp702
   paths:
     exclude:
     - '*.md'

@@ -13,14 +13,6 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/City-of-Helsinki/wordpress-helfi-site-core"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/City-of-Helsinki/wordpress-helfi-mu-autoloader"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/City-of-Helsinki/wordpress-helfi-hds-wp.git"
         },
         {
@@ -32,9 +24,6 @@
       "composer/installers": "^2.2",
       "johnpbloch/wordpress-core-installer": "^2.0",
       "johnpbloch/wordpress-core": "7.0.2",
-
-      "city-of-helsinki/wp-mu-autoloader": "^2.0",
-      "city-of-helsinki/wordpress-helfi-site-core": "*",
 
       "inpsyde/wp-translation-downloader": "^2.0"
     },

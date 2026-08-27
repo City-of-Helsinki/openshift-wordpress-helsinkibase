@@ -35,28 +35,26 @@ WP Resilient Logger expects to receive source and target configuration via `RESI
 
 |ENV|Type|Description|
 |-|-|-|
-| WP_RESILIENT_LOGGER_ES_HOST | string | Elastic Search host |
-| WP_RESILIENT_LOGGER_ES_PORT | int | Elastic Search port |
-| WP_RESILIENT_LOGGER_ES_SCHEME | string | Elastic Search scheme |
-| WP_RESILIENT_LOGGER_ES_USERNAME | string | Elastic Search username |
-| WP_RESILIENT_LOGGER_ES_PASSWORD | string | Elastic Search password |
-| WP_RESILIENT_LOGGER_ES_INDEX | string | Elastic Search index name |
-| WP_RESILIENT_LOGGER_ORIGIN | string | Log entry origin |
-| WP_RESILIENT_LOGGER_STORE_OLD_ENTRIES_DAYS | int | How long log entries are stored locally |
-| WP_RESILIENT_LOGGER_BATCH_LIMIT | int |Batch size when submitting log entries |
-| WP_RESILIENT_LOGGER_CHUNK_SIZE | int | Chunk size when submitting log entries |
-| WP_RESILIENT_LOGGER_SUBMIT_UNSENT_ENTRIES | bool | Should log entries be submitted or not |
-| WP_RESILIENT_LOGGER_CLEAR_SENT_ENTRIES | bool | Should log entries be cleared or not |
+| AUDIT_LOG_ES_URL | string | Elastic Search url |
+| AUDIT_LOG_ES_USERNAME | string | Elastic Search username |
+| AUDIT_LOG_ES_PASSWORD | string | Elastic Search password |
+| AUDIT_LOG_ES_INDEX | string | Elastic Search index name |
+| AUDIT_LOG_ORIGIN | string | Log entry origin |
+| AUDIT_LOG_STORE_OLD_ENTRIES_DAYS | int | How long log entries are stored locally |
+| AUDIT_LOG_BATCH_LIMIT | int | Batch size when submitting log entries |
+| AUDIT_LOG_CHUNK_SIZE | int | Chunk size when submitting log entries |
+| AUDIT_LOG_SUBMIT_UNSENT_ENTRIES | bool | Should log entries be submitted or not |
+| AUDIT_LOG_CLEAR_SENT_ENTRIES | bool | Should log entries be cleared or not |
 
 Additional `env` variables to modify `config/default.php` setup of WP Resilient Logger.
 
 |ENV|Type|Description|
 |-|-|-|
-| WP_RESILIENT_LOGGER_ENABLED | bool | Flag for setting Resilient Logger related constants. Defaults to `false` which implies that WP Resilient Logger is not installed. |
-| WP_RESILIENT_LOGGER_WSAL_ENABLED | bool | Flag for setting WSAL related constants which implies that Activity Log is not installed. |
-| WP_RESILIENT_LOGGER_WSAL_DISABLE_EVENTS_VIEW | bool | Sets `RESILIENT_LOGGER_WSAL_DISABLE_EVENTS_VIEW` constant and disables "WSAL Enable / Disable Events" view. |
-| WP_RESILIENT_LOGGER_WSAL_DISALLOW_EDIT_SETTINGS | bool | Sets `RESILIENT_LOGGER_WSAL_DISALLOW_EDIT_SETTINGS` constant and disables WSAL settings view and editing |
-| WP_RESILIENT_LOGGER_USE_WP_CRON | bool | Sets `RESILIENT_LOGGER_USE_WP_CRON` constant and enables WP cron schedule for submitting and clearing log entries. |
+| AUDIT_LOG_ENABLED | bool | Flag for setting Resilient Logger related constants. Defaults to `false` which implies that WP Resilient Logger is not installed. |
+| AUDIT_LOG_WSAL_ENABLED | bool | Flag for setting WSAL related constants. Defaults to `false` which implies that Activity Log is not installed. |
+| AUDIT_LOG_WSAL_DISABLE_EVENTS_VIEW | bool | Sets `RESILIENT_LOGGER_WSAL_DISABLE_EVENTS_VIEW` constant and disables "WSAL Enable / Disable Events" view. |
+| AUDIT_LOG_WSAL_DISALLOW_EDIT_SETTINGS | bool | Sets `RESILIENT_LOGGER_WSAL_DISALLOW_EDIT_SETTINGS` constant and disables WSAL settings view and editing |
+| AUDIT_LOG_USE_WP_CRON | bool | Sets `RESILIENT_LOGGER_USE_WP_CRON` constant and enables WP cron schedule for submitting and clearing log entries. |
 
 ## Docker
 

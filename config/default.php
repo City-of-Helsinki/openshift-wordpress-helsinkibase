@@ -81,21 +81,21 @@ maybe_define_env_const( 'WP_POST_REVISIONS', 'get_int_env_value', 'WORDPRESS_POS
   */
 
 // WP Resilient Logger
-if ( get_bool_env_value( 'WP_RESILIENT_LOGGER_ENABLED', false ) ) {
-	$use_wsal = get_bool_env_value( 'WP_RESILIENT_LOGGER_WSAL_ENABLED', false );
+if ( get_bool_env_value( 'AUDIT_LOG_ENABLED', false ) ) {
+	$use_wsal = get_bool_env_value( 'AUDIT_LOG_WSAL_ENABLED', false );
 
 	if ( $use_wsal ) {
 		maybe_define_env_const(
 			'RESILIENT_LOGGER_WSAL_DISABLE_EVENTS_VIEW',
 			'get_bool_env_value',
-			'WP_RESILIENT_LOGGER_WSAL_DISABLE_EVENTS_VIEW',
+			'AUDIT_LOG_WSAL_DISABLE_EVENTS_VIEW',
 			false
 		);
 
 		maybe_define_env_const(
 			'RESILIENT_LOGGER_WSAL_DISALLOW_EDIT_SETTINGS',
 			'get_bool_env_value',
-			'WP_RESILIENT_LOGGER_WSAL_DISALLOW_EDIT_SETTINGS',
+			'AUDIT_LOG_WSAL_DISALLOW_EDIT_SETTINGS',
 			false
 		);
 	}
@@ -112,28 +112,26 @@ if ( get_bool_env_value( 'WP_RESILIENT_LOGGER_ENABLED', false ) ) {
 			'targets' => array(
 				array(
 					'class' => 'ResilientLogger\Targets\ElasticsearchLogTarget',
-					'es_host' => get_env_value( 'WP_RESILIENT_LOGGER_ES_HOST', 'example.test' ),
-					'es_port' => get_int_env_value( 'WP_RESILIENT_LOGGER_ES_PORT', 9200 ),
-					'es_scheme' => get_env_value( 'WP_RESILIENT_LOGGER_ES_SCHEME', 'http' ),
-					'es_username' => get_env_value( 'WP_RESILIENT_LOGGER_ES_USERNAME', 'username' ),
-					'es_password' => get_env_value( 'WP_RESILIENT_LOGGER_ES_PASSWORD', 'password' ),
-					'es_index' => get_env_value( 'WP_RESILIENT_LOGGER_ES_INDEX', 'index-name' ),
+					'es_url' => get_env_value( 'AUDIT_LOG_ES_URL', 'http://host.docker.internal:9200' ),
+					'es_username' => get_env_value( 'AUDIT_LOG_ES_USERNAME', '' ),
+					'es_password' => get_env_value( 'AUDIT_LOG_ES_PASSWORD', '' ),
+					'es_index' => get_env_value( 'AUDIT_LOG_ES_INDEX', '' ),
 					'required' => true,
 				),
 			),
-			'origin'                 => get_env_value( 'WP_RESILIENT_LOGGER_ORIGIN', 'helsinki-wp' ),
-			'store_old_entries_days' => get_int_env_value( 'WP_RESILIENT_LOGGER_STORE_OLD_ENTRIES_DAYS', 30 ),
-			'batch_limit'            => get_int_env_value( 'WP_RESILIENT_LOGGER_BATCH_LIMIT', 5000 ),
-			'chunk_size'             => get_int_env_value( 'WP_RESILIENT_LOGGER_CHUNK_SIZE', 500 ),
-			'submit_unsent_entries'  => get_bool_env_value( 'WP_RESILIENT_LOGGER_SUBMIT_UNSENT_ENTRIES', true ),
-			'clear_sent_entries'     => get_bool_env_value( 'WP_RESILIENT_LOGGER_CLEAR_SENT_ENTRIES', true ),
+			'origin'                 => get_env_value( 'AUDIT_LOG_ORIGIN', 'helsinki-wp' ),
+			'store_old_entries_days' => get_int_env_value( 'AUDIT_LOG_STORE_OLD_ENTRIES_DAYS', 30 ),
+			'batch_limit'            => get_int_env_value( 'AUDIT_LOG_BATCH_LIMIT', 5000 ),
+			'chunk_size'             => get_int_env_value( 'AUDIT_LOG_CHUNK_SIZE', 500 ),
+			'submit_unsent_entries'  => get_bool_env_value( 'AUDIT_LOG_SUBMIT_UNSENT_ENTRIES', true ),
+			'clear_sent_entries'     => get_bool_env_value( 'AUDIT_LOG_CLEAR_SENT_ENTRIES', true ),
 		) );
 	}
 
 	maybe_define_env_const(
 		'RESILIENT_LOGGER_USE_WP_CRON',
 		'get_bool_env_value',
-		'WP_RESILIENT_LOGGER_USE_WP_CRON',
+		'AUDIT_LOG_USE_WP_CRON',
 		true
 	);
 

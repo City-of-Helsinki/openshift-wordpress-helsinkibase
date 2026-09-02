@@ -43,6 +43,9 @@ maybe_define_env_const( 'NONCE_SALT', 'get_env_value', 'WORDPRESS_NONCE_SALT', '
   * WordPress settings
   */
 
+// AI
+maybe_define_env_const( 'WP_AI_SUPPORT', 'get_bool_env_value', 'WORDPRESS_AI_SUPPORT', false );
+
 // Cache
 maybe_define_env_const( 'WP_CACHE', 'get_bool_env_value', 'WORDPRESS_CACHE', false );
 

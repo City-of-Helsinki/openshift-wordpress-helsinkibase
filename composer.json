@@ -26,16 +26,12 @@
         {
             "type": "vcs",
             "url": "https://github.com/City-of-Helsinki/wordpress-helfi-helsinkiteema.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git"
         }
     ],
     "require": {
       "composer/installers": "^2.2",
 
-      "city-of-helsinki/wp-mu-autoloader": "dev-wi-530-wp-audit-logging",
+      "city-of-helsinki/wp-mu-autoloader": "^2.0",
       "city-of-helsinki/wordpress-helfi-site-core": "*",
 
       "inpsyde/wp-translation-downloader": "^2.0"
@@ -59,9 +55,7 @@
         ],
         "wp-content/mu-plugins/{$name}": [
             "type:wordpress-muplugin",
-            "wpackagist-plugin/two-factor",
-            "wpackagist-plugin/wp-security-audit-log",
-            "city-of-helsinki/wp-resilient-logger"
+            "wpackagist-plugin/two-factor"
         ],
         "wp-content/plugins/{$name}": [
             "type:wordpress-plugin"

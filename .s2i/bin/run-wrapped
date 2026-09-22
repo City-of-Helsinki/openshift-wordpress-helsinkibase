@@ -19,19 +19,19 @@ else
     echo "# Database tables available"
 fi
 
-echo "# Populating SMTP configuration variables"
+echo -e "\n# Populating SMTP configuration variables"
 export SMTP_HOST="${SMTP_HOST:=relay.hel.fi}"
 export SMTP_PORT="${SMTP_PORT:=25}"
 export SMTP_FROM="${SMTP_FROM:=noreply@hel.fi}"
 envsubst < ~/.msmtprc > /tmp/.msmtprc_temp && cp /tmp/.msmtprc_temp ~/.msmtprc
 
-echo "# Generating Apache httpd redirects"
+echo -e "\n# Generating Apache httpd redirects"
 # Generate redirects from WORDPRESS_REDIRECTS variable
-sh ~/utils/generate_redirects.sh /opt/app-root/src/httpd-cfg/redirects.conf_generated
+sh ~/utils/generate_redirects.sh "${APP_DATA}/httpd-cfg/redirects.conf_generated"
 # Append new redirect configuration with current configuration
-cat /opt/app-root/src/httpd-cfg/redirects.conf >> /opt/app-root/src/httpd-cfg/redirects.conf_generated
+cat "${APP_DATA}/httpd-cfg/redirects.conf" >> "${APP_DATA}/httpd-cfg/redirects.conf_generated"
 # Move new redirect configuration in place of current one
-mv /opt/app-root/src/httpd-cfg/redirects.conf_generated /opt/app-root/src/httpd-cfg/redirects.conf
+mv "${APP_DATA}/httpd-cfg/redirects.conf_generated" "${APP_DATA}/httpd-cfg/redirects.conf"
 
 echo -e "\n===== S2I RUN =====\n"
 exec /usr/libexec/s2i/run

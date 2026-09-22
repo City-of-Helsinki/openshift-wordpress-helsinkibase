@@ -30,8 +30,6 @@
     ],
     "require": {
       "composer/installers": "^2.2",
-      "johnpbloch/wordpress-core-installer": "^2.0",
-      "johnpbloch/wordpress-core": "7.1.1",
 
       "city-of-helsinki/wp-mu-autoloader": "^2.0",
       "city-of-helsinki/wordpress-helfi-site-core": "*",
@@ -44,15 +42,13 @@
       "allow-plugins": {
         "composer/installers": true,
         "johnpbloch/wordpress-core-installer": true,
-        "inpsyde/wp-translation-downloader": true,
-        "boxuk/wp-muplugin-loader": true
+        "inpsyde/wp-translation-downloader": true
       }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
       "wordpress-install-dir": "/opt/app-root/src",
-      "mu-require-file": "wp-muplugin-loader.php",
   	  "installer-paths": {
         "wp-content/mu-plugins": [
             "city-of-helsinki/wp-mu-autoloader"

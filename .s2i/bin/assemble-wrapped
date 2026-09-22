@@ -8,7 +8,13 @@ echo "# Backup composer.json"
 cp /tmp/src/composer.json /tmp/composer.json.bak
 
 echo -e "\n===== INSTALL WORDPRESS CORE =====\n"
-echo "# Download WordPress core"
+
+echo "# Backup custom WordPress files"
+mv /tmp/src/.htaccess /tmp/.htaccess.bak
+mv /tmp/src/wp-cli.yml /tmp/wp-cli.yml.bak
+mv /tmp/src/wp-config.php /tmp/wp-config.php.bak
+
+echo -e "\n# Download WordPress core"
 wp core download \
     --version="${WORDPRESS_VERSION}" \
     --path=/tmp/src \
@@ -18,12 +24,12 @@ wp core download \
 
 WP_CORE_DOWNLOADED=$?
 if [ ${WP_CORE_DOWNLOADED} -ne 0 ]; then
-    echo "# Failed to download WordPress core"
+    echo -e "\n# Failed to download WordPress core"
 
     exit ${WP_CORE_DOWNLOADED}
 fi
 
-echo "# Verify WordPress core checksums"
+echo -e "\n# Verify WordPress core checksums"
 wp core verify-checksums \
     --version="${WORDPRESS_VERSION}" \
     --path=/tmp/src \
@@ -31,14 +37,24 @@ wp core verify-checksums \
 
 WP_CORE_CHECKSUM_VERIFIED=$?
 if [ ${WP_CORE_CHECKSUM_VERIFIED} -ne 0 ]; then
-    echo "# Failed to verify WordPress core checksums"
+    echo -e "\n# Failed to verify WordPress core checksums"
 
     exit ${WP_CORE_CHECKSUM_VERIFIED}
 fi
 
-echo "# Download languages"
-wp language core install fi --allow-root
-wp language core install sv_SE --allow-root
+echo -e "\n# Restore custom WordPress files"
+mv /tmp/.htaccess.bak /tmp/src/.htaccess 
+mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml 
+mv /tmp/wp-config.php.bak /tmp/src/wp-config.php 
+
+echo -e "\n# Download languages"
+wp language core install fi \
+    --path=/tmp/src \
+    --allow-root
+
+wp language core install sv_SE \
+    --path=/tmp/src \
+    --allow-root
 
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble
@@ -51,7 +67,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     mv /tmp/composer.json.bak "${APP_DATA}/composer.json"
 
     echo "# Setup composer bin"
-    mv "${APP_DATA}/composer.phar /usr/bin/composer"
+    mv "${APP_DATA}/composer.phar" /usr/bin/composer
     chmod +x /usr/bin/composer
     chmod +w "${APP_DATA}/composer.json"
 
@@ -94,11 +110,11 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     fi
 
     echo "# Set group ownership to root"
-    chgrp -R root "${APP_DATA}"
+    chgrp -R root ${APP_DATA}
 
     echo "# Remove group write from EVERYTHING"
-    find "${APP_DATA} -type f -exec chmod g-w,o-rwx {} +"
-    find "${APP_DATA} -type d -exec chmod g-w,o-rwx {} +"
+    find ${APP_DATA} -type f -exec chmod g-w,o-rwx {} +
+    find ${APP_DATA} -type d -exec chmod g-w,o-rwx {} +
 
     echo "# Selectively add group write"
     chmod g+rw "${APP_DATA}/httpd-cfg/redirects.conf"
@@ -106,7 +122,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     chmod -R g+rw "${APP_DATA}/httpd-cfg"
 
     echo "# Ensure group execute on all directories"
-    find "${APP_DATA} -type d -exec chmod g+X {} +"
+    find ${APP_DATA} -type d -exec chmod g+X {} +
 
     echo "# Mark custom scripts executable"
     chmod +x "${APP_DATA}/.s2i/bin/run-wrapped"

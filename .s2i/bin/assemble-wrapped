@@ -60,7 +60,7 @@ for locale in fi sv_SE; do
 
         echo "# Success: Downloaded WordPress language pack: ${locale}"
     else
-        echo "# Warning: failed to download WordPress language pack: ${locale}"
+        echo "# Warning: Failed to download WordPress language pack: ${locale}"
         rm -f "/tmp/${locale}.zip"
     fi
 done

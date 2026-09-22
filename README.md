@@ -21,6 +21,8 @@ See Docker section for examples.
 
 ### WordPress
 
+WordPress is installed using `wp core download`. If `WORDPRESS_VERSION` build arg or environment variable is available, it will be used to download specified WordPress version. Otherwise the latest version is downloaded. `fi` and `sv_SE` locales are downloaded automatically for the WordPress core.
+
 WordPress setup is handled in `wp-config.php`, which loads the default configuration from `/config/default.php`.
 
 Should you require per project configuration, create a `config/custom.php` file containing the necessary constant definitions.

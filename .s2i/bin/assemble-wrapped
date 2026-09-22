@@ -113,6 +113,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     chmod g+rw "${APP_DATA}/httpd-cfg/redirects.conf"
     chmod g+rw "${APP_DATA}/.msmtprc"
     chmod -R g+rw "${APP_DATA}/httpd-cfg"
+    chmod -R g+rw "${APP_DATA}/wp-content/languages"
 
     echo "# Ensure group execute on all directories"
     find ${APP_DATA} -type d -exec chmod g+X {} +

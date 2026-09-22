@@ -19,10 +19,6 @@ else
     echo "# Database tables available"
 fi
 
-echo -e "\n# Download languages"
-wp language core install fi --allow-root
-wp language core install sv_SE --allow-root
-
 echo -e "\n# Populating SMTP configuration variables"
 export SMTP_HOST="${SMTP_HOST:=relay.hel.fi}"
 export SMTP_PORT="${SMTP_PORT:=25}"

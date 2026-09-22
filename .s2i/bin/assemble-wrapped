@@ -47,7 +47,7 @@ mv /tmp/.htaccess.bak /tmp/src/.htaccess
 mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml
 mv /tmp/wp-config.php.bak /tmp/src/wp-config.php
 
-echo -e "\n# Download WordPress core languages"
+echo -e "\n===== DOWNLOAD WORDPRESS LANGUAGES =====\n"
 mkdir -p /tmp/src/wp-content/languages
 
 for locale in fi sv_SE; do
@@ -57,8 +57,10 @@ for locale in fi sv_SE; do
     then
         unzip -q "/tmp/${locale}.zip" -d /tmp/src/wp-content/languages
         rm -f "/tmp/${locale}.zip"
+
+        echo "# Success: Downloaded WordPress language pack: ${locale}"
     else
-        echo "Warning: failed to download WordPress language pack: ${locale}"
+        echo "# Warning: Failed to download WordPress language pack: ${locale}"
         rm -f "/tmp/${locale}.zip"
     fi
 done
@@ -85,7 +87,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
 
         for REPO_NAME_TYPE_URL in "${REPOSITORIES_LIST[@]}"
         do
-            echo "adding repository with following details: ${REPO_NAME_TYPE_URL}"
+            echo "# Adding repository with following details: ${REPO_NAME_TYPE_URL}"
             composer config repositories.$(echo "${REPO_NAME_TYPE_URL}" | xargs)
             REPOSITORY_ADDED=$?
 

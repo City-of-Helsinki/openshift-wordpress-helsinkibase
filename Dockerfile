@@ -43,6 +43,7 @@ ENV WORDPRESS_VERSION=${WORDPRESS_VERSION}
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \
     chmod +x /usr/bin/wp
 
+# Setup source
 ADD . /tmp/src/
 
 # Install the dependencies

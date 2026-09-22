@@ -47,6 +47,22 @@ mv /tmp/.htaccess.bak /tmp/src/.htaccess
 mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml
 mv /tmp/wp-config.php.bak /tmp/src/wp-config.php
 
+echo -e "\n# Download WordPress core languages"
+mkdir -p /tmp/src/wp-content/languages
+
+for locale in fi sv_SE; do
+    if curl -fsSL \
+        "https://downloads.wordpress.org/translation/core/${WORDPRESS_VERSION}/${locale}.zip" \
+        -o "/tmp/${locale}.zip"
+    then
+        unzip -q "/tmp/${locale}.zip" -d /tmp/src/wp-content/languages
+        rm -f "/tmp/${locale}.zip"
+    else
+        echo "Warning: failed to download WordPress language pack: ${locale}"
+        rm -f "/tmp/${locale}.zip"
+    fi
+done
+
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble
 S2I_ASSEMBLE_SUCCESS=$?
@@ -113,7 +129,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     chmod g+rw "${APP_DATA}/httpd-cfg/redirects.conf"
     chmod g+rw "${APP_DATA}/.msmtprc"
     chmod -R g+rw "${APP_DATA}/httpd-cfg"
-    chmod -R g+rw "${APP_DATA}/wp-content/languages"
 
     echo "# Ensure group execute on all directories"
     find ${APP_DATA} -type d -exec chmod g+X {} +

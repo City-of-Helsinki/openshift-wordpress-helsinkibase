@@ -37,7 +37,7 @@ RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
 
 # WordPress and WP CLI
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
-ARG WORDPRESS_VERSION="7.1.1"
+ARG WORDPRESS_VERSION=""
 
 ENV WORDPRESS_VERSION=${WORDPRESS_VERSION}
 

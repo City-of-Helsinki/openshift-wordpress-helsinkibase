@@ -7,6 +7,37 @@ mv /tmp/src/config/wp-helfi.ini /etc/php.d/wp-helfi.ini
 echo "# Backup composer.json"
 cp /tmp/src/composer.json /tmp/composer.json.bak
 
+echo -e "\n===== INSTALL WORDPRESS CORE =====\n"
+echo "# Download WordPress core"
+wp core download \
+    --version="${WORDPRESS_VERSION}" \
+    --path=/tmp/src \
+    --skip-content \
+    --force
+
+WP_CORE_DOWNLOADED=$?
+if [ ${WP_CORE_DOWNLOADED} -ne 0 ]; then
+    echo "# Failed to download WordPress core"
+
+    exit ${WP_CORE_DOWNLOADED}
+fi
+
+echo "# Verify WordPress core checksums"
+wp core verify-checksums \
+    --version="${WORDPRESS_VERSION}" \
+    --path=/tmp/src
+
+WP_CORE_CHECKSUM_VERIFIED=$?
+if [ ${WP_CORE_CHECKSUM_VERIFIED} -ne 0 ]; then
+    echo "# Failed to verify WordPress core checksums"
+
+    exit ${WP_CORE_CHECKSUM_VERIFIED}
+fi
+
+echo "# Download languages"
+wp language core install fi
+wp language core install sv_SE
+
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble
 S2I_ASSEMBLE_SUCCESS=$?
@@ -15,12 +46,12 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     echo -e "\n===== S2I ASSEMBLE SUCCESSFUL =====\n"
 
     echo "# Restore composer.json"
-    mv /tmp/composer.json.bak /opt/app-root/src/composer.json
+    mv /tmp/composer.json.bak "${APP_DATA}/composer.json"
 
     echo "# Setup composer bin"
-    mv /opt/app-root/src/composer.phar /usr/bin/composer
+    mv "${APP_DATA}/composer.phar /usr/bin/composer"
     chmod +x /usr/bin/composer
-    chmod +w /opt/app-root/src/composer.json
+    chmod +w "${APP_DATA}/composer.json"
 
     if [[ ${COMPOSER_REPOSITORIES} ]]; then
         echo "# Setup additional Composer repositories"
@@ -60,30 +91,24 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
         echo "# No additional Composer packages to install"
     fi
 
-    echo "# Delete default WP plugins"
-    rm -rf /opt/app-root/src/wp-content/plugins/akismet /opt/app-root/src/wp-content/plugins/hello.php
-
-    echo "# Delete default WP themes"
-    find /opt/app-root/src/wp-content/themes -type d -name 'twenty*' -exec rm -rf {} \;
-
     echo "# Set group ownership to root"
-    chgrp -R root /opt/app-root/src
+    chgrp -R root "${APP_DATA}"
 
     echo "# Remove group write from EVERYTHING"
-    find /opt/app-root/src -type f -exec chmod g-w,o-rwx {} +
-    find /opt/app-root/src -type d -exec chmod g-w,o-rwx {} +
+    find "${APP_DATA} -type f -exec chmod g-w,o-rwx {} +"
+    find "${APP_DATA} -type d -exec chmod g-w,o-rwx {} +"
 
     echo "# Selectively add group write"
-    chmod g+rw /opt/app-root/src/httpd-cfg/redirects.conf
-    chmod g+rw /opt/app-root/src/.msmtprc
-    chmod -R g+rw /opt/app-root/src/httpd-cfg
+    chmod g+rw "${APP_DATA}/httpd-cfg/redirects.conf"
+    chmod g+rw "${APP_DATA}/.msmtprc"
+    chmod -R g+rw "${APP_DATA}/httpd-cfg"
 
     echo "# Ensure group execute on all directories"
-    find /opt/app-root/src -type d -exec chmod g+X {} +
+    find "${APP_DATA} -type d -exec chmod g+X {} +"
 
     echo "# Mark custom scripts executable"
-    chmod +x /opt/app-root/src/.s2i/bin/run-wrapped
-    chmod +x /opt/app-root/src/utils/generate_redirects.sh
+    chmod +x "${APP_DATA}/.s2i/bin/run-wrapped"
+    chmod +x "${APP_DATA}/utils/generate_redirects.sh"
 
 else
     echo -e "\n===== S2I ASSEMBLE FAILED =====\n"
@@ -93,6 +118,6 @@ echo -e "\n===== S2I ASSEMBLE READY =====\n"
 
 # cleanup
 rm -rf /mnt/secrets/*
-rm -f /opt/app-root/src/.config/composer/auth.*
+rm -f "${APP_DATA}/.config/composer/auth.*"
 
 exit ${S2I_ASSEMBLE_SUCCESS}

@@ -1,18 +1,21 @@
+# Base image
 FROM registry.access.redhat.com/ubi9/php-83:latest
 
-ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+# Composer config
 ARG COMPOSER_AUTH="{}"
 ARG COMPOSER_REPOSITORIES=""
 ARG COMPOSER_PACKAGES=""
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_DEV=1
+
+# General env config
 ARG MOUNT_SECRET="false"
 
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV COMPOSER_NO_DEV=1
 ENV DISPLAY_ERRORS=OFF
 
-# ENV DOCUMENTROOT=/public
-
+# Set user ID
 USER 0
 
 # github openshift build volume auth
@@ -32,10 +35,16 @@ RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
 
-# WP CLI
+# WordPress and WP CLI
+ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+ARG WORDPRESS_VERSION=""
+
+ENV WORDPRESS_VERSION=${WORDPRESS_VERSION}
+
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \
     chmod +x /usr/bin/wp
 
+# Setup source
 ADD . /tmp/src/
 
 # Install the dependencies

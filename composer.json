@@ -34,8 +34,6 @@
     ],
     "require": {
       "composer/installers": "^2.2",
-      "johnpbloch/wordpress-core-installer": "^2.0",
-      "johnpbloch/wordpress-core": "7.1.1",
 
       "city-of-helsinki/wp-mu-autoloader": "dev-wi-530-wp-audit-logging",
       "city-of-helsinki/wordpress-helfi-site-core": "*",
@@ -55,7 +53,6 @@
     "prefer-stable": true,
     "extra": {
       "wordpress-install-dir": "/opt/app-root/src",
-      "mu-require-file": "wp-muplugin-loader.php",
   	  "installer-paths": {
         "wp-content/mu-plugins": [
             "city-of-helsinki/wp-mu-autoloader"

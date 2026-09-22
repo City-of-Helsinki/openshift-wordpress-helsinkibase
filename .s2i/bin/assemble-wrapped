@@ -13,7 +13,8 @@ wp core download \
     --version="${WORDPRESS_VERSION}" \
     --path=/tmp/src \
     --skip-content \
-    --force
+    --force \
+    --allow-root
 
 WP_CORE_DOWNLOADED=$?
 if [ ${WP_CORE_DOWNLOADED} -ne 0 ]; then
@@ -25,7 +26,8 @@ fi
 echo "# Verify WordPress core checksums"
 wp core verify-checksums \
     --version="${WORDPRESS_VERSION}" \
-    --path=/tmp/src
+    --path=/tmp/src \
+    --allow-root
 
 WP_CORE_CHECKSUM_VERIFIED=$?
 if [ ${WP_CORE_CHECKSUM_VERIFIED} -ne 0 ]; then
@@ -35,8 +37,8 @@ if [ ${WP_CORE_CHECKSUM_VERIFIED} -ne 0 ]; then
 fi
 
 echo "# Download languages"
-wp language core install fi
-wp language core install sv_SE
+wp language core install fi --allow-root
+wp language core install sv_SE --allow-root
 
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble

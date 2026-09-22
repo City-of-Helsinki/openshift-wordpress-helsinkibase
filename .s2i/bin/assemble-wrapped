@@ -100,12 +100,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
         echo "# No additional Composer packages to install"
     fi
 
-    echo -e "\n===== LANGUAGES =====\n"
-
-    echo "# Download WordPress core languages"
-    wp language core install fi --allow-root
-    wp language core install sv_SE --allow-root
-
     echo -e "\n===== FILE AND DIRECTORY PERMISSIONS =====\n"
 
     echo "# Set group ownership to root"
@@ -119,6 +113,7 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
     chmod g+rw "${APP_DATA}/httpd-cfg/redirects.conf"
     chmod g+rw "${APP_DATA}/.msmtprc"
     chmod -R g+rw "${APP_DATA}/httpd-cfg"
+    chmod -R g+rw "${APP_DATA}/wp-content/languages"
 
     echo "# Ensure group execute on all directories"
     find ${APP_DATA} -type d -exec chmod g+X {} +

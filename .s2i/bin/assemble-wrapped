@@ -100,12 +100,6 @@ if [ ${S2I_ASSEMBLE_SUCCESS} -eq 0 ]; then
         echo "# No additional Composer packages to install"
     fi
 
-    echo -e "\n===== LANGUAGES =====\n"
-
-    echo "# Download WordPress core languages"
-    wp language core install fi --allow-root
-    wp language core install sv_SE --allow-root
-
     echo -e "\n===== FILE AND DIRECTORY PERMISSIONS =====\n"
 
     echo "# Set group ownership to root"

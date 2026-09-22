@@ -43,18 +43,9 @@ if [ ${WP_CORE_CHECKSUM_VERIFIED} -ne 0 ]; then
 fi
 
 echo -e "\n# Restore custom WordPress files"
-mv /tmp/.htaccess.bak /tmp/src/.htaccess 
-mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml 
-mv /tmp/wp-config.php.bak /tmp/src/wp-config.php 
-
-echo -e "\n# Download languages"
-wp language core install fi \
-    --path=/tmp/src \
-    --allow-root
-
-wp language core install sv_SE \
-    --path=/tmp/src \
-    --allow-root
+mv /tmp/.htaccess.bak /tmp/src/.htaccess
+mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml
+mv /tmp/wp-config.php.bak /tmp/src/wp-config.php
 
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble

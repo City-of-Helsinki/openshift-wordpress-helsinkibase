@@ -15,12 +15,22 @@ mv /tmp/src/wp-cli.yml /tmp/wp-cli.yml.bak
 mv /tmp/src/wp-config.php /tmp/wp-config.php.bak
 
 echo -e "\n# Download WordPress core"
-wp core download \
-    --version="${WORDPRESS_VERSION}" \
-    --path=/tmp/src \
-    --skip-content \
-    --force \
-    --allow-root
+if [ -n "${WORDPRESS_VERSION:-}" ]; then
+    wp core download \
+        --version="${WORDPRESS_VERSION}" \
+        --path=/tmp/src \
+        --skip-content \
+        --force \
+        --allow-root
+else
+    wp core download \
+        --path=/tmp/src \
+        --skip-content \
+        --force \
+        --allow-root
+
+    WORDPRESS_VERSION=$(sed -n "s/^\$wp_version = '\([^']*\)';/\1/p" /tmp/src/wp-includes/version.php)
+fi
 
 WP_CORE_DOWNLOADED=$?
 if [ ${WP_CORE_DOWNLOADED} -ne 0 ]; then
@@ -47,23 +57,27 @@ mv /tmp/.htaccess.bak /tmp/src/.htaccess
 mv /tmp/wp-cli.yml.bak /tmp/src/wp-cli.yml
 mv /tmp/wp-config.php.bak /tmp/src/wp-config.php
 
-echo -e "\n===== DOWNLOAD WORDPRESS LANGUAGES =====\n"
-mkdir -p /tmp/src/wp-content/languages
+echo -e "\n# Download WordPress languages"
+if [ -n "${WORDPRESS_VERSION:-}" ]; then
+    mkdir -p /tmp/src/wp-content/languages
 
-for locale in fi sv_SE; do
-    if curl -fsSL \
-        "https://downloads.wordpress.org/translation/core/${WORDPRESS_VERSION}/${locale}.zip" \
-        -o "/tmp/${locale}.zip"
-    then
-        unzip -q "/tmp/${locale}.zip" -d /tmp/src/wp-content/languages
-        rm -f "/tmp/${locale}.zip"
+    for locale in fi sv_SE; do
+        if curl -fsSL \
+            "https://downloads.wordpress.org/translation/core/${WORDPRESS_VERSION}/${locale}.zip" \
+            -o "/tmp/${locale}.zip"
+        then
+            unzip -oq "/tmp/${locale}.zip" -d /tmp/src/wp-content/languages
+            rm -f "/tmp/${locale}.zip"
 
-        echo "# Success: Downloaded WordPress language pack: ${locale}"
-    else
-        echo "# Warning: Failed to download WordPress language pack: ${locale}"
-        rm -f "/tmp/${locale}.zip"
-    fi
-done
+            echo "Success: Downloaded WordPress language pack: ${locale}"
+        else
+            echo "Warning: Failed to download WordPress language pack: ${locale}"
+            rm -f "/tmp/${locale}.zip"
+        fi
+    done
+else
+    echo "Warning: Unable to determine downloaded WordPress version"
+fi
 
 echo -e "\n===== S2I ASSEMBLE =====\n"
 /usr/libexec/s2i/assemble

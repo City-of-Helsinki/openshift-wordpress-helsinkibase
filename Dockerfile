@@ -34,7 +34,7 @@ RUN dnf install -y mysql jq && \
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf && \
-    echo "session.upload_progress.enabled=Off" >> /etc/php-fpm.d/www.conf
+    echo "php_admin_flag[session.upload_progress.enabled] = off" >> /etc/php-fpm.d/www.conf
 
 # WordPress and WP CLI
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"

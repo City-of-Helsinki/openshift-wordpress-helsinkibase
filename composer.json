@@ -63,8 +63,6 @@
         ],
         "wp-content/mu-plugins/{$name}": [
             "type:wordpress-muplugin",
-            "wpackagist-plugin/wp-security-audit-log",
-            "city-of-helsinki/wp-resilient-logger",
             "wpackagist-plugin/two-factor"
         ],
         "wp-content/plugins/{$name}": [

@@ -36,12 +36,8 @@ RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf && \
     echo "php_admin_flag[session.upload_progress.enabled] = off" >> /etc/php-fpm.d/www.conf
 
-# WordPress and WP CLI
+# WP CLI
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
-ARG WORDPRESS_VERSION=""
-
-ENV WORDPRESS_VERSION=${WORDPRESS_VERSION}
-
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \
     chmod +x /usr/bin/wp
 

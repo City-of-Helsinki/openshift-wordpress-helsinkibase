@@ -1,17 +1,19 @@
+# Base image
 FROM registry.access.redhat.com/ubi9/php-83:latest
 
+# Composer config
 ARG WP_CLI_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 ARG COMPOSER_AUTH="{}"
 ARG COMPOSER_REPOSITORIES=""
 ARG COMPOSER_PACKAGES=""
 ARG MOUNT_SECRET="false"
 
+# General env config
 ENV PATH='/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/app-root/src/vendor/bin'
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV DISPLAY_ERRORS=OFF
 
-# ENV DOCUMENTROOT=/public
-
+# Set user ID
 USER 0
 
 # github openshift build volume auth
@@ -26,15 +28,17 @@ RUN dnf install -y mysql jq && \
     dnf install -y msmtp && \
     dnf clean all
 
-# Additional php-fpm settings
+# Additional php-fpm settings and hardenings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
-    echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
+    echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf && \
+    echo "php_admin_flag[session.upload_progress.enabled] = off" >> /etc/php-fpm.d/www.conf
 
 # WP CLI
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \
     chmod +x /usr/bin/wp
-
+    
+# Setup source
 ADD . /tmp/src/
 
 # Install the dependencies

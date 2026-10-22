@@ -13,6 +13,7 @@ trigger:
   branches:
     include:
       - main
+      - ubi9-php83-wp713
   paths:
     exclude:
     - '*.md'

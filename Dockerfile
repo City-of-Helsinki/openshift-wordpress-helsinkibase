@@ -29,7 +29,8 @@ RUN dnf install -y mysql jq && \
 # Additional php-fpm settings
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
-    echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf
+    echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf && \
+    echo "php_admin_flag[session.upload_progress.enabled] = off" >> /etc/php-fpm.d/www.conf
 
 # WP CLI
 RUN wget $WP_CLI_URL -O /usr/bin/wp && \

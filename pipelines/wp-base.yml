@@ -3,8 +3,7 @@ schedules:
     displayName: "Weekly Monday Build"
     branches:
       include:
-        - main
-        - ubi9-php83-wp707
+        - ubi9-php83-wp709
 
 # Continuous integration (CI) triggers cause a pipeline to run whenever you push
 # an update to the specified branches or you push specified tags.
@@ -12,8 +11,7 @@ trigger:
   batch: true
   branches:
     include:
-      - main
-      - ubi9-php83-wp707
+      - ubi9-php83-wp709
   paths:
     exclude:
     - '*.md'

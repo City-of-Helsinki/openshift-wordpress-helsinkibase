@@ -63,7 +63,10 @@ maybe_define_env_const( 'DISABLE_WP_CRON', 'get_bool_env_value', 'WORDPRESS_DISA
 
 // Debug
 maybe_define_env_const( 'WP_DEBUG', 'get_bool_env_value', 'WORDPRESS_DEBUG', false );
-maybe_define_env_const( 'WP_DEBUG_LOG', 'get_bool_env_value', 'WORDPRESS_DEBUG_LOG', false );
+// Debug log goes to stderr (container log) instead of wp-content/debug.log
+if ( ! defined( 'WP_DEBUG_LOG' ) ) {
+	define( 'WP_DEBUG_LOG', get_bool_env_value( 'WORDPRESS_DEBUG_LOG', false ) ? '/dev/stderr' : false );
+}
 maybe_define_env_const( 'WP_DEBUG_DISPLAY', 'get_bool_env_value', 'WORDPRESS_DEBUG_DISPLAY', false );
 
 // Filesystem

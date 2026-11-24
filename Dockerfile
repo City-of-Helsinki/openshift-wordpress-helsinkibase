@@ -34,6 +34,8 @@ RUN dnf install -y mysql jq && \
 RUN echo "clear_env = no" >> /etc/php-fpm.d/www.conf && \
     echo "pm.max_spare_servers = 10" >> /etc/php-fpm.d/www.conf && \
     echo "catch_workers_output = yes" >> /etc/php-fpm.d/www.conf && \
+    echo "decorate_workers_output = no" >> /etc/php-fpm.d/www.conf && \
+    sed -i '/^\[global\]/a log_limit = 8192' /etc/php-fpm.conf && \
     echo "php_admin_flag[session.upload_progress.enabled] = off" >> /etc/php-fpm.d/www.conf
 
 # WordPress and WP CLI

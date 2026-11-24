@@ -11,6 +11,7 @@ trigger:
   batch: true
   branches:
     include:
+    - ubi9-php83-wp709
   paths:
     exclude:
     - '*.md'
